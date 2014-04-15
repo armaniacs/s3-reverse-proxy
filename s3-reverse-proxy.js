@@ -1,3 +1,5 @@
+var SysLogger = require('ain2');
+var console = new SysLogger({tag: 's3rp', facility: 'local2'});
 
 var sys     = require('sys'),
     http    = require('http'),
@@ -6,7 +8,7 @@ var sys     = require('sys'),
 
 var main = function() {
     http.createServer(handle_request).listen(port);
-    sys.puts("reverse proxy to " + upstreamHost + " http://localhost:" + port );
+    console.log("101\tSTART\t-\t-\treverse proxy to " + upstreamHost + " http://localhost:" + port );
 };
 
 var handle_request = function (client_request, client_response) {
@@ -43,7 +45,7 @@ var handle_request = function (client_request, client_response) {
             size += chunk.length;
         });
         upstream_response.addListener("end", function() {
-            sys.puts(client_request.method + " " + client_request.url + " " + upstream_response.statusCode + " " + size);
+	    console.log(upstream_response.statusCode +"\t"+ client_request.method + "\t" + client_request.url + "\t" + size);
             client_response.end();
         });
     });
@@ -54,8 +56,7 @@ var proxy_pass_reverse = function(upstream_response, localhost) {
     var xlm = upstream_response.headers["x-amz-meta-mtime"];
     if (xlm) {
 	upstream_response.headers['last-modified'] = xlm;
-	upstream_response.headers['server'] = "s3rp 09d";
-        sys.puts("xlm: " + upstream_response.headers.server);
+	upstream_response.headers['server'] = "s3rp";
     }
 };
 

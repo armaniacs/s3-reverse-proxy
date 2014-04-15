@@ -5,6 +5,7 @@ S3 Reverse proxy which overrides last-modify by x-amz-meta-mtime.
 
 * It works with not only S3 but also any http server which run on TCP/80.
 * s3-reverse-proxy.js listen TCP/8000.
+* All logs are sent w/ syslog. Facility = local2.
 
 
 Usage
