@@ -7,7 +7,7 @@ var sys     = require('sys'),
     upstreamHost = process.argv[2];
 
 var main = function() {
-    http.createServer(handle_request).listen(port);
+    http.createServer(handle_request).listen(port, '127.0.0.1');
     console.log("101\tSTART\t-\t-\treverse proxy to " + upstreamHost + " http://localhost:" + port );
 };
 
